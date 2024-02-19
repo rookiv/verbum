@@ -23,25 +23,26 @@ export type SerializedEmojiNode = Spread<
   typeof SerializedTextNode
 >;
 
-let __className: string = 'EmojiNode';
 export class EmojiNode extends TextNode {
+  __className: string;
+
   static getType(): string {
     return 'emoji';
   }
 
   static clone(node: EmojiNode): EmojiNode {
-    return new EmojiNode(__className, node.__text, node.__key);
+    return new EmojiNode(node.__className, node.__text, node.__key);
   }
 
   constructor(className: string, text: string, key?: NodeKey) {
     super(text, key);
-    __className = className;
+    this.__className = className;
   }
 
   createDOM(config: EditorConfig): HTMLElement {
     const dom = document.createElement('span');
     const inner = super.createDOM(config);
-    dom.className = __className;
+    dom.className = this.__className;
     inner.className = 'emoji-inner';
     dom.appendChild(inner);
     return dom;
