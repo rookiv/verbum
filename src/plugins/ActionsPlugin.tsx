@@ -6,7 +6,7 @@
  *
  */
 
-import type { LexicalEditor } from 'lexical';
+import type { LexicalEditor, ParagraphNode } from 'lexical';
 
 import { $createCodeNode, $isCodeNode } from '@lexical/code';
 import { exportFile, importFile } from '@lexical/file';
@@ -74,7 +74,7 @@ export default function ActionsPlugin({
     return editor.registerUpdateListener(() => {
       editor.getEditorState().read(() => {
         const root = $getRoot();
-        const children = root.getChildren();
+        const children = root.getChildren() as Array<ParagraphNode>;
 
         if (children.length > 1) {
           setIsEditorEmpty(false);
