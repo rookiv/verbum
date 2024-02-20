@@ -40,6 +40,7 @@ import { LexicalEditor } from 'lexical';
 import { useTranslation } from 'react-i18next';
 import DragDropPaste from './plugins/DragDropPastePlugin';
 import EmojiPickerPlugin from './plugins/EmojiPickerPlugin';
+import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 
 interface IEditorProps {
   children?: ReactNode;
@@ -49,6 +50,7 @@ interface IEditorProps {
   isEditable?: boolean;
   locale?: 'en' | 'fr' | 'ptBr' | 'ru' | null;
   onChange?: (editorState: string, editorInstance?: LexicalEditor) => void;
+  usePlainText?: boolean;
 }
 
 interface IEnabledEditorPlugins {
@@ -102,6 +104,7 @@ const Editor = ({
   plugins = {},
   listMaxIndent = 7,
   placeholder = '',
+  usePlainText = false,
   isEditable = true,
   locale = null,
   onChange,
@@ -143,11 +146,20 @@ const Editor = ({
         {enabledPlugins.autoLink && <AutoLinkPlugin />}
 
         <>
-          <RichTextPlugin
-            contentEditable={<ContentEditable />}
-            placeholder={placeholderComponent}
-            ErrorBoundary={LexicalErrorBoundary}
-          />
+          {usePlainText ?
+            <RichTextPlugin
+              contentEditable={<ContentEditable />}
+              placeholder={placeholderComponent}
+              ErrorBoundary={LexicalErrorBoundary}
+            />
+            :
+            <PlainTextPlugin
+              contentEditable={<ContentEditable />}
+              placeholder={placeholderComponent}
+              ErrorBoundary={LexicalErrorBoundary}
+            />
+          }
+
           <OnChangePlugin
             onChange={(editorState) => {
               onChange?.(JSON.stringify(editorState), activeEditor);
