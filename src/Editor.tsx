@@ -147,13 +147,13 @@ const Editor = ({
 
         <>
           {usePlainText ?
-            <RichTextPlugin
+            <PlainTextPlugin
               contentEditable={<ContentEditable />}
               placeholder={placeholderComponent}
               ErrorBoundary={LexicalErrorBoundary}
             />
             :
-            <PlainTextPlugin
+            <RichTextPlugin
               contentEditable={<ContentEditable />}
               placeholder={placeholderComponent}
               ErrorBoundary={LexicalErrorBoundary}
